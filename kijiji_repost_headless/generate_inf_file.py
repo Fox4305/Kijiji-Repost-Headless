@@ -10,7 +10,7 @@ adType = ['OFFER', 'WANTED']
 priceType = ['FIXED', 'GIVE_AWAY', 'CONTACT', 'SWAP_TRADE']
 
 
-#Dictionary w/ postal_code, lat, lng, city, province
+#Dictionary w/ postal_code, lat, lng, city, province, phone
 def get_address_map():
     address = input("Your address: ")
     data = {'address': address}
@@ -131,6 +131,7 @@ if __name__ == '__main__':
     categoryMap = restart_function(pick_category)
     addressMap = get_address_map()
     locationId, locationArea = get_location_and_area_ids()  # returns a tuple containing the location ID and area ID
+    phoneNumber = input("Phone number: ")
     title = input("Ad title: ")
     description = get_description()
     print("Ad price type:")
@@ -142,29 +143,30 @@ if __name__ == '__main__':
     photos = input("List of image filenames to upload (comma separated): ")
 
     f = open('item.inf', 'w')
-    f.write("postAdForm.geocodeLat={}\n".format(addressMap['lat']))
-    f.write("postAdForm.geocodeLng={}\n".format(addressMap['lng']))
-    f.write("postAdForm.city={}\n".format(addressMap['city']))
-    f.write("postAdForm.addressCity={}\n".format(addressMap['city']))
-    f.write("postAdForm.province={}\n".format(addressMap['province']))
-    f.write("postAdForm.addressProvince={}\n".format(addressMap['province']))
-    f.write("postAdForm.postalCode={}\n".format(addressMap['postal_code']))
-    f.write("postAdForm.addressPostalCode={}\n".format(addressMap['postal_code']))
-    f.write("PostalLat={}\n".format(addressMap['lat']))
-    f.write("PostalLng={}\n".format(addressMap['lng']))
-    f.write("categoryId={}\n".format(categoryMap['category']))
-    f.write("postAdForm.adType={}\n".format(ad))
-    f.write("postAdForm.priceType={}\n".format(pmtType))
+    f.write("postAdForm.geocodeLat|{}\n".format(addressMap['lat']))
+    f.write("postAdForm.geocodeLng|{}\n".format(addressMap['lng']))
+    f.write("postAdForm.city|{}\n".format(addressMap['city']))
+    f.write("postAdForm.addressCity|{}\n".format(addressMap['city']))
+    f.write("postAdForm.province|{}\n".format(addressMap['province']))
+    f.write("postAdForm.addressProvince|{}\n".format(addressMap['province']))
+    f.write("postAdForm.postalCode|{}\n".format(addressMap['postal_code']))
+    f.write("postAdForm.addressPostalCode|{}\n".format(addressMap['postal_code']))
+    f.write("postAdForm.phoneNumber|{}\n".format(phoneNumber))
+    f.write("PostalLat|{}\n".format(addressMap['lat']))
+    f.write("PostalLng|{}\n".format(addressMap['lng']))
+    f.write("categoryId|{}\n".format(categoryMap['category']))
+    f.write("postAdForm.adType|{}\n".format(ad))
+    f.write("postAdForm.priceType|{}\n".format(pmtType))
     if pmtType == 'FIXED':
-        f.write("postAdForm.priceAmount={}\n".format(price))
-    [f.write("postAdForm.attributeMap[{}]={}\n".format(attrKey, attrVal)) for attrKey, attrVal in categoryMap.items() if attrKey != "category"]
-    f.write("postAdForm.title={}\n".format(title))
-    f.write("postAdForm.description={}\n".format(description))
-    f.write("postAdForm.locationId={}\n".format(locationId))
-    f.write("locationLevel0={}\n".format(locationArea))
-    f.write("featuresForm.topAdDuration=7\n")
-    f.write("submitType=saveAndCheckout\n")
-    f.write("imageCsv={}\n".format(photos))
+        f.write("postAdForm.priceAmount|{}\n".format(price))
+    [f.write("postAdForm.attributeMap[{}]|{}\n".format(attrKey, attrVal)) for attrKey, attrVal in categoryMap.items() if attrKey != "category"]
+    f.write("postAdForm.title|{}\n".format(title))
+    f.write("postAdForm.description|{}\n".format(description))
+    f.write("postAdForm.locationId|{}\n".format(locationId))
+    f.write("locationLevel0|{}\n".format(locationArea))
+    f.write("featuresForm.topAdDuration|7\n")
+    f.write("submitType|saveAndCheckout\n")
+    f.write("imageCsv|{}\n".format(photos))
     f.close()
 
     print("item.inf file created. Use this file to post your ad.")
