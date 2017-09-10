@@ -73,7 +73,7 @@ def get_inf_details(inf_file):
     Extract ad data from inf file
     """
     with open(inf_file, 'rt') as infFileLines:
-        data = {key: val for line in infFileLines for (key, val) in (line.strip().split("="),)}
+        data = {key: val for line in infFileLines for (key, val) in (line.strip().split("|"),)}
     files = [open(picture, 'rb').read() for picture in data['imageCsv'].split(",")]
     return [data, files]
 
@@ -141,7 +141,7 @@ def repost_ad(args):
     api.login(args.username, args.password)
     delAdName = ""
     for line in open(args.inf_file, 'rt'):
-        [key, val] = line.strip().rstrip("\n").split("=")
+        [key, val] = line.strip().rstrip("\n").split("|")
         if key == "postAdForm.title":
             delAdName = val
     try:

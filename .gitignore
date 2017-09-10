@@ -2,3 +2,5 @@ __pycache__/
 listings/
 *.inf
 /.idea/
+
+\.DS_Store
