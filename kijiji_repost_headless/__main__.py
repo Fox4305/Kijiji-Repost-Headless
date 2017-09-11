@@ -172,7 +172,7 @@ def check_ad(args):
     api.login(args.username, args.password)
     AdName = ""
     for line in open(args.inf_file, 'rt'):
-        [key, val] = line.strip().rstrip("\n").split("=")
+        [key, val] = line.strip().rstrip("\n").split("|")
         if key == "postAdForm.title":
             AdName = val
     allAds = api.get_all_ads()
